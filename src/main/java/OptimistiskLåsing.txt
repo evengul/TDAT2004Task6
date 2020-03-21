@@ -1,0 +1,3 @@
+Optimistisk låsing er å ha en annotasjon @Version over en variabel som holder styr på versjonen for databaseraden.
+Om to transaksjoner skjer samtidig, vil den som blir sist ferdig se at sin lokale versjon ikke stemmer med den "offisielle" versjonen i database, og at den ikke har riktige data.
+Da kaster den en feil, og operasjonen bør skje på nytt.
