@@ -13,6 +13,4 @@ Oppgave 2: Kjør filen src/main/java/Tasks/Client1.java, og få følgende result
     
 Oppgave 3: Løst ved å kjøre to tråder, hvor vi får feil data om systemet kjører flere ganger.
 
-Oppgave 4: Kjører filen src/main/Tasks/Client2.java, og får OptimisticLockException og RollbackException om vi prøver å gjøre noe feil.
-
-  Å sette inn feilbehandling av disse exceptionene gjør at vi ender opp med riktig resultat til slutt.
+Oppgave 4: Kjører filen src/main/Tasks/Client2.java, og får OptimisticLockException og RollbackException om vi prøver å gjøre noe feil. Å sette inn feilbehandling av disse exceptionene gjør at vi ender opp med riktig resultat til slutt.
