@@ -1,6 +1,7 @@
-Run 0: Account in Gunnar's name with account number 1 has 75.0 money
-Run 0: Account in Frank's name with account number 2 has 175.0 money
-Run 1: Account in Gunnar's name with account number 1 has 0.0 money
-Run 1: Account in Frank's name with account number 2 has 200.0 money
-Account in Gunnar's name with account number 1 has 0.0 money
-Account in Frank's name with account number 2 has 175.0 money
+All accounts:
+Account in Gunnar's name with account number 1 has 50.0 money
+Account in Frank's name with account number 2 has 200.0 money
+All accounts with more than 75 money:
+Account in Frank's name with account number 2 has 200.0 money
+Gunnar after update:
+Account in Ole's name with account number 1 has 50.0 money
