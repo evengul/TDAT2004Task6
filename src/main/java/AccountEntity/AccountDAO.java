@@ -12,8 +12,13 @@ public class AccountDAO {
         if (resetDB){
             try{
                 em.getTransaction().begin();
-                em.createNativeQuery("CREATE TABLE ACCOUNT (accountNumber INT PRIMARY KEY, money INT , ownerName VARCHAR(100))").executeUpdate();
+                em.createNativeQuery("DROP TABLE ACCOUNT").executeUpdate();
+                em.createNativeQuery("CREATE TABLE ACCOUNT (accountNumber INT PRIMARY KEY, money INT , ownerName VARCHAR(100), VERSION INT)").executeUpdate();
                 em.getTransaction().commit();
+                Account a1 = new Account(1, 50, "Gunnar");
+                Account a2 = new Account(2, 200, "Frank");
+                createAccount(a1);
+                createAccount(a2);
             }
             finally {
                 closeEM(em);
@@ -49,6 +54,9 @@ public class AccountDAO {
             Account returnedAccount = em.merge(account);
             em.getTransaction().commit();
         }
+        catch (RollbackException | OptimisticLockException e){
+            System.out.println("An optimistic lock exception occured");
+        }
         finally {
             closeEM(em);
         }
@@ -64,7 +72,11 @@ public class AccountDAO {
             }
             em.remove(account);
             em.getTransaction().commit();
-        }finally {
+        }
+        catch (RollbackException | OptimisticLockException e){
+            System.out.println("An optimistic lock exception occured");
+        }
+        finally {
             closeEM(em);
         }
     }

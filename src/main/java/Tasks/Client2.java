@@ -1,3 +1,5 @@
+package Tasks;
+
 import AccountEntity.Account;
 import AccountEntity.AccountDAO;
 import AccountEntity.TransferThread;
@@ -30,43 +32,32 @@ public class Client2 {
         try{
             emf = Persistence.createEntityManagerFactory("TDAT2004Task6");
             //Vi lager en ny tilkobling, uten å fjerne databasen helt
-            accountDAO = new AccountDAO(emf, false);
-            Client1.deleteAccounts(accountDAO);
-            //Vi prøver å tvinge frem en feil
+            accountDAO = new AccountDAO(emf, true);
 
             ArrayList<Thread> threads = new ArrayList<>();
+             //Fjern de to kontoene som finnes, og lag de på nytt.
 
-            for (int i = 0; i < 10; i++){
-                //Fjern de to kontoene som finnes, og lag de på nytt.
-                Client1.createAccounts(accountDAO);
+            //Finn konto nr 1 og 2
+            Account account1 = accountDAO.findAccount(1);
+            Account account2 = accountDAO.findAccount(2);
 
-                //Finn konto nr 1 og 2
-                Account account1 = accountDAO.findAccount(1);
-                Account account2 = accountDAO.findAccount(2);
+            System.out.println(account1);
+            System.out.println(account2);
 
-                System.out.println(account1);
-                System.out.println(account2);
+            //Overfør først 50 kroner, så 75. Konto 1 skal ende opp med 75, og konto 2 med 175
+            threads.add(transfer(account1, account2, 50, accountDAO));
+            threads.add(transfer(account2, account1, 75, accountDAO));
 
-                //Overfør først 50 kroner, så 75. Konto 1 skal ende opp med 75, og konto 2 med 175
-                threads.add(transfer(account1, account2, 50, accountDAO));
-                threads.add(transfer(account2, account1, 75, accountDAO));
-
-                for (Thread t : threads){
-                    t.join();
-                }
-
-                //Bryt løkken hvis vi ender opp med en feil her
-                account1 = accountDAO.findAccount(1);
-                account2 = accountDAO.findAccount(2);
-                if (account1.getMoney() != 75.0 || account2.getMoney() != 175.0){
-                    System.out.println("error");
-                }
-                if (i != 9){
-                    Client1.deleteAccounts(accountDAO);
-                }
-
+            for (Thread t : threads){
+                t.join();
             }
 
+            //Bryt løkken hvis vi ender opp med en feil her
+            account1 = accountDAO.findAccount(1);
+            account2 = accountDAO.findAccount(2);
+            if (account1.getMoney() != 75.0 || account2.getMoney() != 175.0){
+                System.out.println("Some error occurred during transfer.");
+            }
 
             //Skriv ut dataene. Dette gir det vi ønsker å få ut.
             List<Account> allAccounts = accountDAO.getAllAccounts();

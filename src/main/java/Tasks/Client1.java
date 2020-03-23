@@ -1,3 +1,5 @@
+package Tasks;
+
 import AccountEntity.Account;
 import AccountEntity.AccountDAO;
 
@@ -7,19 +9,6 @@ import java.util.List;
 
 public class Client1 {
 
-    public static void deleteAccounts(AccountDAO dao){
-        dao.deleteAccount(1);
-        dao.deleteAccount(2);
-    }
-
-    public static Account[] createAccounts(AccountDAO dao){
-        Account a1 = new Account(1, 50, "Gunnar");
-        Account a2 = new Account(2, 200, "Frank");
-        dao.createAccount(a1);
-        dao.createAccount(a2);
-        return new Account[]{a1, a2};
-    }
-
     public static void main(String[] args){
 
         EntityManagerFactory emf = null;
@@ -27,10 +16,7 @@ public class Client1 {
 
         try {
             emf = Persistence.createEntityManagerFactory("TDAT2004Task6");
-            accountDAO = new AccountDAO(emf, false);
-
-            deleteAccounts(accountDAO);
-            Account[] accounts = createAccounts(accountDAO);
+            accountDAO = new AccountDAO(emf, true);
 
             List<Account> allAccounts = accountDAO.getAllAccounts();
             List<Account> allAccountsLargerThan75 = accountDAO.getAllAccountsLargerThanX(75);
@@ -45,8 +31,8 @@ public class Client1 {
                 System.out.println(a);
             }
 
-            accounts[0].setOwnerName("Ole");
-            accountDAO.updateAccount(accounts[0]);
+            allAccounts.get(0).setOwnerName("Ole");
+            accountDAO.updateAccount(allAccounts.get(0));
             System.out.println("Gunnar after update: ");
             System.out.println(accountDAO.findAccount(1));
         } finally {
