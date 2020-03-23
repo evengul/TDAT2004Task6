@@ -1,2 +1,6 @@
 /.idea
 Task6.iml
+*.zip
+Task6EvenGultvedt.zip
+src/test/
+target/
